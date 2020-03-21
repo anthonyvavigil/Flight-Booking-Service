@@ -1,0 +1,26 @@
+# Two terminals attempt to create user1 and user2 but with the same password then logs in. 
+# Both should succeed.
+#
+# user 1's commands
+create user1 user1 100
+login user1 user1
+quit
+*
+#
+# user 1's expected output
+Created user user1
+Logged in as user1
+Goodbye
+*
+#
+# user 2's commands
+create user2 user1 100
+login user2 user1
+quit
+*
+#
+# user 2's expected output
+Created user user2
+Logged in as user2
+Goodbye
+*

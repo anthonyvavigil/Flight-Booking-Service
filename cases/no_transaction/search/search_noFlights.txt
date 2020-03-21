@@ -1,0 +1,10 @@
+# user 1
+search "Seattle WA" "Devils Lake ND" 0 1 10
+quit
+*
+#
+# expected printouts for user 1
+#
+No flights match your selection
+Goodbye
+*

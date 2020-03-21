@@ -1,0 +1,10 @@
+# user 1
+reservations
+quit
+*
+#
+# expected printouts for user 1
+#
+Cannot view reservations, not logged in
+Goodbye
+*

@@ -1,0 +1,13 @@
+# user 1 inputs
+#
+create user1 user1 10
+login wrongUser user1
+quit
+*
+#
+# expected
+#
+Created user user1
+Login failed
+Goodbye
+*

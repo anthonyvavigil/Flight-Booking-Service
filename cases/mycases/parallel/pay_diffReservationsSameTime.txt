@@ -1,0 +1,63 @@
+# terminals try to cancel reservations at the same time (concurrent access)
+#
+# user 1
+#
+create user1 user1 10000
+login user1 user1
+search "Seattle WA" "Philadelphia PA" 1 1 1
+book 0
+pay 1
+quit
+*
+#
+# expected printouts for user1
+# case 1: user1's reservation is processed first
+#
+Created user user1
+Logged in as user1
+Itinerary 0: 1 flight(s), 278 minutes
+ID: 668131 Day: 1 Carrier: AA Number: 1800 Origin: Seattle WA Dest: Philadelphia PA Duration: 278 Capacity: 11 Price: 228
+Booked flight(s), reservation ID: 1
+Paid reservation: 1 remaining balance: 9772
+Goodbye
+|
+# case 2: user2's reservation is processed first, and user1's commands are referencing the wrong reservation
+Created user user1
+Logged in as user1
+Itinerary 0: 1 flight(s), 278 minutes
+ID: 668131 Day: 1 Carrier: AA Number: 1800 Origin: Seattle WA Dest: Philadelphia PA Duration: 278 Capacity: 11 Price: 228
+Booked flight(s), reservation ID: 2
+Cannot find unpaid reservation 1 under user: user1
+Goodbye
+*
+#
+# user 1
+#
+create user2 user2 10000
+login user2 user2
+search "Seattle WA" "Philadelphia PA" 1 1 1
+book 0
+pay 2
+quit
+*
+#
+# expected printouts for user1
+# case 1: user1's reservation is processed first
+#
+Created user user2
+Logged in as user2
+Itinerary 0: 1 flight(s), 278 minutes
+ID: 668131 Day: 1 Carrier: AA Number: 1800 Origin: Seattle WA Dest: Philadelphia PA Duration: 278 Capacity: 11 Price: 228
+Booked flight(s), reservation ID: 2
+Paid reservation: 2 remaining balance: 9772
+Goodbye
+|
+# case 2: user2's reservation is processed first, and user1's commands are referencing the wrong reservation
+Created user user2
+Logged in as user2
+Itinerary 0: 1 flight(s), 278 minutes
+ID: 668131 Day: 1 Carrier: AA Number: 1800 Origin: Seattle WA Dest: Philadelphia PA Duration: 278 Capacity: 11 Price: 228
+Booked flight(s), reservation ID: 1
+Cannot find unpaid reservation 2 under user: user2
+Goodbye
+*
